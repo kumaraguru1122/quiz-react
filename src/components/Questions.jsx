@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import QUIZ_DATA from '../assets/quizData.json';
 import Question from './Question';
 
-const Questions = ({ level }) => {
+const Questions = ({ level, showScore }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userSelections, setUserSelections] = useState(Array(QUIZ_DATA[level].length).fill(null));
   const [score, setScore] = useState(0);
@@ -43,7 +43,7 @@ const Questions = ({ level }) => {
       )}
       <button onClick={handleNextQuestion}>Next Question</button>
       {currentQuestionIndex === QUIZ_DATA[level].length - 1 && (
-        <p>Final Score: {score}</p>
+        <button onClick={showScore}>show result</button>
       )}
     </div>
   );

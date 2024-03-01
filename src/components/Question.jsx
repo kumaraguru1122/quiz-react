@@ -1,21 +1,41 @@
-// src/components/Question.js
-import React from 'react';
+import React, { useState } from "react";
 
-const Question = ({ questionData }) => {
-  const { question, options } = questionData;
+const Question = ({ question, current }) => {
+  const [correct, setCorrect] = useState(null);
+  const [selected, setSelected] = useState(null);
+
+  const checkAnswer = (item) => {
+    setSelected(item);
+
+    if (item === question.answer) {
+      setCorrect(true);
+    } else {
+      setCorrect(false);
+    }
+  };
 
   return (
     <div>
-      <h3 className="text-2xl font-bold mb-4">{question}</h3>
-      <ul>
-        {options.map((option, optionIndex) => (
-          <li key={optionIndex} className="mb-2">
-            <button className="bg-gray-300 hover:bg-gray-500 text-gray-800 font-bold py-2 px-4 rounded">
-              {option}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <h3>{question.question}</h3>
+      {question.options.map((item) => (
+        <button
+          key={item}
+          onClick={() => checkAnswer(item)}
+          className={`bg-slate-900 block p-2 m-2 border-2 ${
+            selected === item
+              ? correct === true
+                ? "border-green-500 bg-green-200"
+                : correct === false
+                ? "border-red-500 bg-red-200"
+                : ""
+              : "border-gray-500 bg-gray-300"
+          }`}
+        >
+          {item}
+        </button>
+      ))}
+
+      <button onClick={() => current((prev) => prev + 1)}>Next</button>
     </div>
   );
 };

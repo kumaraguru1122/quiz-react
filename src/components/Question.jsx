@@ -1,17 +1,28 @@
 import React, { useState } from "react";
 
-const Question = ({ question, current }) => {
+const Question = ({ question, nextQuestion, setScore }) => {
   const [correct, setCorrect] = useState(null);
   const [selected, setSelected] = useState(null);
+  const [answered, setAnswered] = useState(false); // New state to track whether an option has been selected
 
   const checkAnswer = (item) => {
-    setSelected(item);
+    if (!answered) {
+      setSelected(item);
 
-    if (item === question.answer) {
-      setCorrect(true);
-    } else {
-      setCorrect(false);
+      if (item === question.answer) {
+        setCorrect(true);
+        setScore((prev) => prev + 1);
+      } else {
+        setCorrect(false);
+      }
+
+      setAnswered(true); // Set answered to true after the user selects an option
     }
+  };
+
+  const nextAnswer = () => {
+    nextQuestion((prev) => prev + 1);
+    setAnswered(false);
   };
 
   return (
@@ -21,7 +32,7 @@ const Question = ({ question, current }) => {
         <button
           key={item}
           onClick={() => checkAnswer(item)}
-          className={`bg-slate-900 block p-2 m-2 border-2 ${
+          className={`block p-2 m-2 border-2 ${
             selected === item
               ? correct === true
                 ? "border-green-500 bg-green-200"
@@ -30,12 +41,13 @@ const Question = ({ question, current }) => {
                 : ""
               : "border-gray-500 bg-gray-300"
           }`}
+          disabled={answered} // Disable the button if an option has been selected
         >
           {item}
         </button>
       ))}
 
-      <button onClick={() => current((prev) => prev + 1)}>Next</button>
+      <button onClick={nextAnswer}>Next</button>
     </div>
   );
 };

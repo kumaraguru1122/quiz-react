@@ -1,18 +1,27 @@
 import React from "react";
+import { useState } from "react";
 import Question from "./Question";
+import Score from "./Score"; // Import your Score component
 import quizData from "../assets/quizData";
+import { useEffect } from "react";
 
-const Questions = ({ level }) => {
+const Questions = ({ level, showScore, setScore }) => {
   let data = quizData[level];
-  const [current, setCurrent] = React.useState(0);
-  const [score, setScore] = React.useState(0);
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    if (current === data.length - 1) {
+      showScore();
+    }
+  }, [current, data.length, showScore]);
 
   return (
     <>
-       <Question question={data[current]} current={setCurrent}/>
-      <div className="progress">
-        {current + 1} of {data.length} - Score: {score}/{data.length}
-      </div>
+      <Question
+        question={data[current]}
+        nextQuestion={() => setCurrent((prev) => prev + 1)}
+        setScore={setScore}
+      />
     </>
   );
 };

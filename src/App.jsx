@@ -8,6 +8,7 @@ import Score from "./components/Score";
 const App = () => {
   const [page, setPage] = useState("home"); // Possible values: 'home', 'difficultySelection', 'questions'
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
+  const [score, setScore] = useState(0);
 
   const startQuiz = () => {
     setPage("difficultySelection");
@@ -22,6 +23,11 @@ const App = () => {
     setPage("score");
   };
 
+  const restart = () => {
+    window.location.reload();
+  }
+  
+
   return (
     <div className="container mx-auto p-8">
       {page === "home" && <Home startQuiz={startQuiz} />}
@@ -29,9 +35,9 @@ const App = () => {
         <DifficultySelection onSelectDifficulty={selectDifficulty} />
       )}
       {page === "questions" && (
-        <Questions level={selectedDifficulty} showScore={showScore} />
+        <Questions level={selectedDifficulty} showScore={showScore} setScore={setScore} />
       )}
-      {page === "score" && <Score />}
+      {page === "score" && <Score restart={restart} score={score}/>}
     </div>
   );
 };

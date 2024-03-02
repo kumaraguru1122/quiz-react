@@ -1,14 +1,38 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/quiz-react/assets/icon-152x152-CxNiz32d.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="/quiz-react/assets/icon-152x152-CxNiz32d.png"
+    />
+    <meta name="theme-color" content="#4ed094" />
+    <link rel="manifest" href="/quiz-react/assets/manifest-B_gP8lrM.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-    <script type="module" crossorigin src="/quiz-react/assets/index-DuGG8dQw.js"></script>
-    <link rel="stylesheet" crossorigin href="/quiz-react/assets/index-BaaogDzX.css">
+    <title>Quiz Js</title>
+    <script type="module" crossorigin src="/quiz-react/assets/index-C_BgO5tX.js"></script>
+    <link rel="stylesheet" crossorigin href="/quiz-react/assets/index-DHmDZikK.css">
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("/quiz-react/sw.js")
+            .then((reg) => {
+              console.log("Service Worker registered", reg);
+            })
+            .catch((err) => {
+              console.log("Service Worker registration failed", err);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
